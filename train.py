@@ -4,6 +4,8 @@ import numpy as np
 import helpers.command_parser as cp
 import helpers.command_parser as parse
 import helpers.early_stopping as EsParse
+
+from time import time
 from helpers.data_handling import DataHandler
 
 
@@ -19,7 +21,7 @@ def training_command_parser(parser):
 	parser.add_argument('--mpi', help='Max progress intervals', default=np.inf, type=float)
 	parser.add_argument('--max_iter', help='Max number of iterations', default=np.inf, type=float)
 	parser.add_argument('--max_time', help='Max training time in seconds', default=np.inf, type=float)
-	parser.add_argument('--min_iter', help='Min number of iterations before showing progress', default=50000, type=float) # 10 epoch for ml1m
+	parser.add_argument('--min_iter', help='Min number of iterations before showing progress', default=10, type=float) # 10 epoch for ml1m
 
 
 def num(s):
@@ -36,8 +38,8 @@ def main():
 
 	dataset = DataHandler(dirname=args.dataset, extended_training_set=args.extended_set, shuffle_training=args.tshuffle)
 	if args.dataset == "ml1m":
-		args.min_iter = 50000
-		args.progress = 5000
+		args.min_iter = 10
+		args.progress = 5
 	elif args.dataset == 'netflix':
 		args.min_iter = 600000
 		args.progress = 40000
@@ -59,4 +61,7 @@ def main():
 
 
 if __name__ == '__main__':
+	t1 = time()
 	main()
+	t2 = time()
+	print(t1, t2, t2-t1)

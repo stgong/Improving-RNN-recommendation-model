@@ -44,7 +44,7 @@ class DataHandler(object):
 		else:
 			self.training_set = SequenceGenerator(self.dirname+'data/train_set_sequences',shuffle=shuffle_training)
 		self.validation_set = SequenceGenerator(self.dirname+'data/val_set_sequences')
-		self.test_set = SequenceGenerator(self.dirname+'data/test_set_sequences')
+		# self.test_set = SequenceGenerator(self.dirname+'data/test_set_sequences')
 
 		self._load_stats()
 
@@ -125,23 +125,19 @@ class DataHandler(object):
 
 			stats = f.readline().split()[1:]
 			self.training_set.n_users, self.training_set.n_items, self.training_set.n_interactions, self.training_set.longest_sequence = map(int, stats[0:4])
-			# self.training_set.earliest_time = datetime.datetime.strptime(stats[4], '%Y-%m-%d')
-			#self.training_set.earliest_time = datetime.datetime.strptime(stats[5], '%Y-%m-%d')
+
 
 			stats = f.readline().split()[1:]
 			self.validation_set.n_users, self.validation_set.n_items, self.validation_set.n_interactions, self.validation_set.longest_sequence = map(int,  stats[0:4])
-			# self.validation_set.earliest_time = datetime.datetime.strptime(stats[4], '%Y-%m-%d')
-			#self.validation_set.earliest_time = datetime.datetime.strptime(stats[5], '%Y-%m-%d')
 
-			stats = f.readline().split()[1:]
-			self.test_set.n_users, self.test_set.n_items, self.test_set.n_interactions, self.test_set.longest_sequence = map(int, stats[0:4])
-			# self.test_set.earliest_time = datetime.datetime.strptime(stats[4], '%Y-%m-%d')
-			#self.test_set.earliest_time = datetime.datetime.strptime(stats[5], '%Y-%m-%d')
+			# stats = f.readline().split()[1:]
+			# self.test_set.n_users, self.test_set.n_items, self.test_set.n_interactions, self.test_set.longest_sequence = map(int, stats[0:4])
+
 
 			if self.extended_training_set:
 				#Those values are unfortunately inexact
 				self.training_set.n_users, self.training_set.n_items = self.n_users, self.n_items
-				self.training_set.n_interactions += (self.validation_set.n_interactions + self.test_set.n_interactions)/2
+				self.training_set.n_interactions += (self.validation_set.n_interactions)/2
 
 class SequenceGenerator(object):
 	"""docstring for SequenceGenerator"""
@@ -184,8 +180,8 @@ class SequenceGenerator(object):
 				user_id = sequence[0]
 				sequence = sequence[1:]
 
-				# sequence = [[int(sequence[3 * i]), float(sequence[3 * i + 1])] for i in range(int(len(sequence) / 3))] # with timestamp in sequence
-				sequence = [[int(sequence[2 * i]), float(sequence[2 * i + 1])] for i in range(int(len(sequence) / 2))] #no timestamp in sequence
+				sequence = [[int(sequence[3 * i]), float(sequence[3 * i + 1])] for i in range(int(len(sequence) / 3))] # with timestamp in sequence
+				# sequence = [[int(sequence[2 * i]), float(sequence[2 * i + 1])] for i in range(int(len(sequence) / 2))] #no timestamp in sequence
 
 				# Determine length of the sequence to be returned
 				if max_length == None:

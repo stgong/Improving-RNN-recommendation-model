@@ -17,7 +17,7 @@ def command_parser(*sub_command_parser):
 
 def predictor_command_parser(parser):
 	parser.add_argument('-fr', dest='framework', choices=['ktf', 'kth', 'th', 'tf'], help='framework, [keras-tensorflow backend, keras-theano backend, theano, tensorflow]', default='tf')
-	parser.add_argument('-b', dest='batch_size', help='Batch size', default=16, type=int)
+	parser.add_argument('-b', dest='batch_size', help='Batch size', default=3, type=int)
 	parser.add_argument('-l', dest='learning_rate', help='Learning rate', default=0.1, type=float)
 	parser.add_argument('-r', dest='regularization', help='Regularization (positive for L2, negative for L1)', default=0., type=float)
 	parser.add_argument('--loss', help='Loss function, choose between TOP1, BPR and Blackout (Sampling), or hinge, logit and logsig (multi-targets), or CCE (Categorical cross-entropy)',

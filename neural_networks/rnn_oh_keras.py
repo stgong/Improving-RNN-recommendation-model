@@ -11,6 +11,7 @@ from os import environ
 from helpers import evaluation
 
 
+
 class RNNOneHotK(RNNBase):
 	"""RNNOneHot are recurrent neural networks that do not depend on the factorization: they are based on one-hot encoding.
 
@@ -133,8 +134,10 @@ A diversity_bias of 0 produces the normal behavior, with no bias.
 		"""
 
 		ev = evaluation.Evaluator(self.dataset, k=10)
+		print(self.iter)
 		if not self.iter:
-				for batch_input, goal in self._gen_mini_batch(self.dataset.validation_set(epochs=1), test=True):
+				for batch_input, goal in self._gen_mini_batch(self.dataset.validation_set(epochs=1), test=False):# test=True
+					print(batch_input[0])
 					output = self.model.predict_on_batch(batch_input[0])
 					predictions = np.argpartition(-output, list(range(10)), axis=-1)[0, :10]
 					# print("predictions")

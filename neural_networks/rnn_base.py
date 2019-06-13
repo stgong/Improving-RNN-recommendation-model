@@ -12,6 +12,8 @@ import numpy as np
 
 from .sequence_noise import SequenceNoise
 from .target_selection import SelectTargets
+from helpers import evaluation
+
 
 
 class RNNBase(object):
@@ -22,11 +24,11 @@ class RNNBase(object):
 		target_selection=SelectTargets(),
 		active_f='tanh',
 		max_length=30,
-		batch_size=16,
+		batch_size=3,
 		tying=False,
 		temperature=10,
 		gamma=0.5,
-		iter=False,
+		iter=False,#iteration to get the best value of seq length??
 		tying_new = False,
 		attention=False):
 
@@ -126,7 +128,7 @@ class RNNBase(object):
 		max_time=np.inf,
 		progress=2.0, 
 		autosave='All',
-		save_dir='', 
+		save_dir='',
 		min_iterations=0, 
 		max_iter=np.inf,
 		load_last_model=False,
@@ -293,6 +295,19 @@ class RNNBase(object):
 		"""
 		add value to lists in metrics dictionary
 		"""
+		# ev = evaluation.Evaluator(self.dataset, k=10)
+		# for batch_input, goal in self._gen_mini_batch(self.dataset.validation_set(epochs=1), test=True):
+		# 	predictions = self.test_function(batch_input)
+		# 	ev.add_instance(goal, predictions)
+        #
+		# metrics['recall'].append(ev.average_recall())
+		# metrics['sps'].append(ev.sps())
+		# metrics['ndcg'].append(ev.average_ndcg())
+		# metrics['user_coverage'].append(ev.user_coverage())
+		# metrics['item_coverage'].append(ev.item_coverage())
+		# metrics['blockbuster_share'].append(ev.blockbuster_share())
+        #
+		# return metrics
 
 	def _gen_mini_batch(self, sequence_generator, test=False):
 		''' Takes a sequence generator and produce a mini batch generator.
