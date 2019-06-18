@@ -333,8 +333,15 @@ next_save = int(2.0)
 train_costs = []
 current_train_cost = []
 epochs = []
-metrics = {}
-metrics = {name: [] for name in metrics.keys()}
+s_metrics = {'recall': {'direction': 1},
+						'precision': {'direction': 1},
+						'sps': {'direction': 1},
+						'user_coverage': {'direction': 1},
+						'item_coverage': {'direction': 1},
+						'ndcg': {'direction': 1},
+						'blockbuster_share': {'direction': -1}
+						}
+metrics = {name: [] for name in s_metrics.keys()}
 filename = {}
 save_dir='/Users/xun/Documents/Thesis/Improving-RNN-recommendation-model/k3-3m/models'
 current_train_cost=[]

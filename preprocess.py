@@ -10,15 +10,20 @@ from shutil import copyfile
 
 def command_parser():
 	parser = argparse.ArgumentParser()
-	parser.add_argument('-f', dest='filename', help='Input file', default='C:/Users\Kwon\workspace\Python\RNN-Rec\data\ml1m.dat', type=str)
+	parser.add_argument('-f', dest='filename', help='Input file',
+						default='/Users/xun/Documents/Thesis/Improving-RNN-recommendation-model/ks-3m/ks-3m-all.csv',
+						type=str)
 	parser.add_argument('--columns', help='Order of the columns in the file (eg: "uirt"), u for user, i for item, t for timestamp, r for rating. '
-										  'If r is not present a default rating of 1 is given to all interaction. If t is not present interactions are assumed to be in chronological order. Extra columns are ignored. Default: uit', default="uirt", type=str)
-	parser.add_argument('--sep', help='Separator between the column. If unspecified pandas will try to guess the separator', default="::", type=str)
+										  'If r is not present a default rating of 1 is given to all interaction. If t is not present interactions '
+										  'are assumed to be in chronological order. Extra columns are ignored. Default: uit', default="uit", type=str)
+	parser.add_argument('--sep', help='Separator between the column. If unspecified pandas will try to guess the separator', default=",", type=str)
 	parser.add_argument('--min_user_activity', help='Users with less interactions than this will be removed from the dataset. Default: 2', default=2, type=int)
 	parser.add_argument('--min_item_pop', help='Items with less interactions than this will be removed from the dataset. Default: 5', default=5, type=int)
-	parser.add_argument('--val_size', help='Number of users to put in the validation set. If in (0,1) it will be interpreted as the fraction of total number of users. Default: 0.1', default=500, type=float)
-	parser.add_argument('--test_size', help='Number of users to put in the test set. If in (0,1) it will be interpreted as the fraction of total number of users. Default: 0.1', default=500, type=float)
-	parser.add_argument('--seed', help='Seed for the random train/val/test split', default=2, type=int)
+	parser.add_argument('--val_size', help='Number of users to put in the validation set. If in (0,1) it will be interpreted as the fraction of total number of users. Default: 0.1',
+						default=0.1, type=float)
+	parser.add_argument('--test_size', help='Number of users to put in the test set. If in (0,1) it will be interpreted as the fraction of total number of users. Default: 0.1',
+						default=0.1, type=float)
+	parser.add_argument('--seed', help='Seed for the random train/val/test split', default=1234, type=int)
 	parser.add_argument('--min_time_diff', help='avoid users whose ratingTime is too dense', default=0, type=int)
 
 	args = parser.parse_args()
@@ -159,7 +164,7 @@ def save_index_mapping(data, dirname):
 
 	return data
 
-def split_data(data, nb_val_users, nb_test_users, dirname, save_time):
+def split_data(data, nb_val_users, nb_test_users, dirname, save_time  = False):
 	"""Splits the data set into training, validation and test sets.
 	Each user is in one and only one set.
 	nb_val_users is the number of users to put in the validation set.

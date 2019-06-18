@@ -180,7 +180,7 @@ def save_index_mapping(data, dirname):
     return data
 
 
-def split_data(data, nb_val_users, dirname, save_time = True):
+def split_data(data, nb_val_users, dirname, save_time = False):
     """Splits the data set into training, validation and test sets.
     Each user is in one and only one set.
     nb_val_users is the number of users to put in the validation set.

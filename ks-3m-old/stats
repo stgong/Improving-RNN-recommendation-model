@@ -1,0 +1,4 @@
+set	n_users	n_items	n_interactions	longest_sequence	earliest_time	latest_time
+Full	25800	1486	821026	2595
+Train	25300	1486	805450	2595
+Val	500	1390	15576	283
